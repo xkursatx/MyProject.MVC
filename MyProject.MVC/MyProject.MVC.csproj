@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="wwwroot\client\" />
+	</ItemGroup>
+
+	<Target Name="BuildReact" BeforeTargets="Build">
+		<PropertyGroup>
+			<ViteMode Condition="'$(Configuration)' == 'Debug'">development</ViteMode>
+			<ViteMode Condition="'$(Configuration)' == 'Release'">production</ViteMode>
+		</PropertyGroup>
+
+		<Exec Command="npm install" WorkingDirectory="..\react-client" />
+		<Exec Command="npm run build -- --mode $(ViteMode)" WorkingDirectory="..\react-client" />
+	</Target>
+
+
+</Project>
