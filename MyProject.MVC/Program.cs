@@ -13,18 +13,23 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseStaticFiles(); // wwwroot'taki dosyalarý servis eder
 app.UseRouting();
-
 app.UseAuthorization();
-
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
-app.MapFallbackToFile("index.html");
+app.MapWhen(context => context.Request.Path.StartsWithSegments("/client"), builder =>
+{
+    builder.UseRouting();
+    builder.UseEndpoints(endpoints =>
+    {
+        // React SPA fallback (client/index.html yerine, senin HomeController.Index olabilir)
+        endpoints.MapFallbackToController("Index", "React");
+    });
+});
 
 app.Run();

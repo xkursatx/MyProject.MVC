@@ -6,13 +6,16 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: '../MyProject.MVC/wwwroot/client', // Build çıktısı burada olacak
+    manifest: true,
     emptyOutDir: true,
     rollupOptions: {
       input: './src/main.jsx',
       output: {
-        entryFileNames: 'bundle.js',
-        assetFileNames: 'assets/[name]-[hash][extname]', // Görseller, fontlar vs
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]'
       }
     }
   }
 });
+

@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    var manifestPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/client/.vite/manifest.json");
+    var manifest = System.Text.Json.JsonDocument.Parse(System.IO.File.ReadAllText(manifestPath));
+    var mainJs = manifest.RootElement.GetProperty("src/main.jsx").GetProperty("file").GetString();
+    var cssFile = manifest.RootElement.GetProperty("src/main.jsx").GetProperty("css")[0].GetString();
+}
+
+<!-- HTML -->
+@* <link rel="stylesheet" href="~/client/@cssFile" />
+ *@<div id="root"></div>
+<script type="module" src="~/client/@mainJs"></script>

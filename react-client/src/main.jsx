@@ -16,6 +16,5 @@ import MyComponent from './MyComponent';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    <MyComponent />
   </StrictMode>,
 )
